@@ -16,9 +16,9 @@ The board is represented as 7x7 matrix in code. Player would pick one marble wil
 
 3. After this we updated code with priority queue prioritizing nodes based on `f` value of a node which is sum of `g` and `h` values, where g is how far are we from initial state and h is heuristic function
 
-    1. **Heuristic function:**  heuristic function is simple Manhattan distance calculator.
+    3.1. **Heuristic function:**  heuristic function is simple Manhattan distance calculator.
 
-    2. **F-value:** we add g and h to get f and then prioritization of nodes is done on basis of this f value
+    3.2. **F-value:** we add g and h to get f and then prioritization of nodes is done on basis of this f value
 
   
 
@@ -26,9 +26,9 @@ The board is represented as 7x7 matrix in code. Player would pick one marble wil
 
 1. Number of nodes explored are less in heuristic approach. When we ran code this is the difference observed
 
-    1. Number of nodes explored in *normal approach:* 963,871
+    1.1. Number of nodes explored in *normal approach:* 963,871
 
-    2. Number of nodes explored in *heuristic approach:* 846,818
+    1.2. Number of nodes explored in *heuristic approach:* 846,818
 
 2. This nodes were printed every 20 seconds and first approach gave output before `40` seconds but the heuristic approach took nearly `100` seconds so this heuristic approach takes computation time but less memory
 
