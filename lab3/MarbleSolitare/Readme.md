@@ -1,5 +1,5 @@
 # Marble Solitaire solution
----
+
 
 ## Problem overview
 
