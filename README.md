@@ -14,11 +14,11 @@ Our team consists of the following members:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-repo/ai-cs307-coursework.git
+   git clone https://github.com/Nyashavasoya/CS307-AI.git
    ```
 2. **Navigate to the Desired Folder:**
    ```bash
-   cd ai-cs307-coursework/directoryName
+   cd CS307-AI
    ```
 3. **Run the Code:**
    Follow the instructions provided in each folder to run the code.
