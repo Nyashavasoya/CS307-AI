@@ -12,7 +12,7 @@ class Node:
     def __lt__(self, other):
         return self.f < other.f
 
-directions = [(0, -2), (0, 2), (-2, 0), (2, 0)]  # up, down, left, right
+directions = [(0, -2), (0, 2), (2, 0), (-2, 0)]  
 
 def is_valid(board, x, y, dx, dy):
     if 0 <= x + dx < 7 and 0 <= y + dy < 7 and board[x][y] == 1:
@@ -28,13 +28,20 @@ def apply_move(board, x, y, dx, dy):
     return new_board
 
 def manhattan_heuristic(board):
-    center = (3, 3)  # Assuming the center is at (3, 3) for a 7x7 board
+    center = (3, 3) 
     distance = 0
     for i in range(len(board)):
         for j in range(len(board[i])):
             if board[i][j] == 1:
                 distance += abs(i - center[0]) + abs(j - center[1])
     return distance
+def num_marblres(board):
+    count = 0
+    for i in range(len(board)):
+        for j in range(len(board[i])):
+            if(board[i][j]) == 1:
+                count+=1
+    return count
 
 def get_successor(node):
     successors = []
@@ -44,12 +51,12 @@ def get_successor(node):
                 for dx, dy in directions:
                     if is_valid(node.board, x, y, dx, dy):
                         new_board = apply_move(node.board, x, y, dx, dy)
-                        successor_node = Node(new_board, g=node.g + 1, h=manhattan_heuristic(new_board), path=node.path + [(x, y, x + dx, y + dy)])
+                        successor_node = Node(new_board, g=num_marblres(new_board), h=manhattan_heuristic(new_board), path=node.path + [(x, y, x + dx, y + dy)])
                         successors.append(successor_node)
     return successors
 
 def search_agent(start_board):
-    start_node = Node(start_board)
+    start_node = Node(start_board, g = 32)
     frontier = []
     heapq.heappush(frontier, (start_node.f,start_node))
     visited_states = set()
@@ -61,6 +68,7 @@ def search_agent(start_board):
         nodes_expanded += 1
 
         if is_goal_state(current_node.board):
+            print(f"Total number of nodes explored: {nodes_expanded}")
             return current_node.path
 
         visited_states.add(tuple(map(tuple, current_node.board)))
@@ -69,9 +77,6 @@ def search_agent(start_board):
             if tuple(map(tuple, successor.board)) not in visited_states:
                     heapq.heappush(frontier, (successor.f,successor))
 
-        if time.time() - start_time >= 20:
-            print(f"Nodes expanded: {nodes_expanded}")
-            start_time = time.time()
     return None
 
 def is_goal_state(board):
