@@ -48,18 +48,21 @@ class JigsawPuzzle:
         if direction == 'left':
             edge1 = np.array(piece1)[:, 0]
             edge2 = np.array(piece2)[:, -1]
-        else:  # top
+        else:  
             edge1 = np.array(piece1)[0, :]
             edge2 = np.array(piece2)[-1, :]
+    
         
-        # Calculate correlation
-        correlation = np.correlate(edge1, edge2)[0]
-        # Normalize correlation to be between 0 and 1
-        normalized_correlation = (correlation - np.min(edge1) * np.min(edge2) * len(edge1)) / \
-                                 (np.std(edge1) * np.std(edge2) * len(edge1))
+        mean1, mean2 = np.mean(edge1), np.mean(edge2)
+    
         
-        # Convert to a cost (lower is better)
-        return 1 - normalized_correlation
+        numerator = np.sum((edge1 - mean1) * (edge2 - mean2))
+        denominator = np.sqrt(np.sum((edge1 - mean1) ** 2) * np.sum((edge2 - mean2) ** 2))
+        correlation = numerator / denominator if denominator != 0 else 0
+    
+        
+        return 1 - correlation
+
 
     def swap_pieces(self, solution, i, j):
         solution[i], solution[j] = solution[j], solution[i]
@@ -90,7 +93,7 @@ class JigsawPuzzle:
                 else:
                     stagnant_iterations += 1
             else:
-                self.swap_pieces(current_solution, i, j)  # Undo swap
+                self.swap_pieces(current_solution, i, j)  
                 stagnant_iterations += 1
 
             # Adaptive cooling and reheating
