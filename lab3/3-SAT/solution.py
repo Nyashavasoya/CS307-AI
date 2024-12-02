@@ -9,10 +9,6 @@ k = int(input("Number of variables in clause? "))
 n = int(input("Number of unique variables? "))
 
 def createProblem(m, k, n, threshold=10):
-    """
-    Generates a list of unique 3-SAT problems.
-    Each problem consists of `m` clauses, each with `k` variables.
-    """
     # Lowercase for positive literals, uppercase for negative literals
     positive_var = (list(ascii_lowercase))[:n]
     negative_var = [c.upper() for c in positive_var]
@@ -31,19 +27,12 @@ def createProblem(m, k, n, threshold=10):
 variables, problems = createProblem(m, k, n)
 
 def assignment(variables, n):
-    """
-    Generates a random assignment of 0 or 1 to each variable.
-    """
     forPositive = list(np.random.choice(2, n))
     forNegative = [abs(1 - i) for i in forPositive]
     assign = dict(zip(variables, forPositive + forNegative))
     return assign
 
 def solve(problem, assign):
-    """
-    Evaluates how many clauses are satisfied by the assignment.
-    A clause is satisfied if at least one of its literals is True (1).
-    """
     count = 0
     for sub in problem:
         # A clause is satisfied if any of its literals is True
@@ -81,9 +70,6 @@ def hillClimbing(problem, assign, parentNum, received, step):
 
 # Beam Search Implementation
 def beamSearch(problem, initial_assign, beam_width, max_steps=1000):
-    """
-    Implements Beam Search with a specified beam width.
-    """
     beam = [(initial_assign.copy(), solve(problem, initial_assign))]
     steps = 0
 
@@ -119,9 +105,6 @@ def beamSearch(problem, initial_assign, beam_width, max_steps=1000):
 
 # Variable Neighborhood Descent Implementation
 def variableNeighbor(problem, initial_assign, beam_width, max_steps=1000):
-    """
-    Implements Variable Neighborhood Descent with increasing beam widths.
-    """
     current_assign = initial_assign.copy()
     current_score = solve(problem, current_assign)
     steps = 0
